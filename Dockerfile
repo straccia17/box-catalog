@@ -11,17 +11,15 @@ RUN go mod download
 
 COPY ./ ./
 
-RUN go build -o /box-catalog-api
+RUN go build -o box-catalog-api
 
 ## Deploy
-FROM gcr.io/distroless/base-debian10
+FROM alpine
 
-WORKDIR /
+WORKDIR /app
 
-COPY --from=build /box-catalog-api /box-catalog-api
+COPY --from=build /app/box-catalog-api ./
 
 EXPOSE 8080
 
-USER nonroot:nonroot
-
-ENTRYPOINT ["/box-catalog-api"]
+CMD [ "/app/box-catalog-api" ]
