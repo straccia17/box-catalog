@@ -1,0 +1,3 @@
+.env
+*.sql
+compose.yaml
