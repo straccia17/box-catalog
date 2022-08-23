@@ -27,6 +27,9 @@ func main() {
 
 	api := router.Group("/").Use(services.VerifyJWT())
 
+	api.GET("/locations", controllers.GetLocations)
+	api.POST("/locations", controllers.NewLocation)
+
 	api.GET("/categories", controllers.GetCategories)
 	api.POST("/categories", controllers.NewCategory)
 	api.GET("/categories/:categoryId/items", controllers.GetCategoryItems)

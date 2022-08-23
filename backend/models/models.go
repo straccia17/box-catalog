@@ -1,14 +1,23 @@
 package models
 
+type Location struct {
+	ID    string `json:"id" db:"location_id"`
+	Label string `json:"label" db:"label"`
+}
+
+type NewLocation struct {
+	Label string `json:"label" binding:"required"`
+}
+
 type Box struct {
 	ID       string `json:"id" db:"box_id"`
 	Label    string `json:"label" db:"label"`
-	Position string `json:"position" db:"position"`
+	Location string `json:"location" db:"location"`
 }
 
 type NewBox struct {
-	Label    string `json:"label" binding:"required"`
-	Position string `json:"position" binding:"required"`
+	Label      string `json:"label" binding:"required"`
+	LocationID string `json:"locationId" binding:"required"`
 }
 
 type Category struct {
@@ -24,7 +33,7 @@ type Item struct {
 	ID       int    `json:"id" db:"item_id"`
 	Item     string `json:"item" db:"item"`
 	Box      string `json:"box" db:"box"`
-	Position string `json:"position" db:"position"`
+	Location string `json:"location" db:"location"`
 	Category string `json:"category" db:"category"`
 }
 

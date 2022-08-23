@@ -18,9 +18,10 @@ func GetItems(c *gin.Context) {
 		i.item,
 		c.title as category,
 		b.label as box,
-		b.position 
+		l.label as location
 	FROM items i 
 	LEFT JOIN boxes b ON i.box_id = b.box_id
+	LEFT JOIN locations l ON b.location_id = l.location_id
 	LEFT JOIN categories c ON i.category_id = c.category_id
 	WHERE i.user_id = $1
 	`, userId)
