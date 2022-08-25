@@ -33,7 +33,7 @@ services:
     image: nginx:1.23.1-alpine
     volumes:
       - type: bind
-        source: ./web/public
+        source: ./web/dist
         target: /usr/share/nginx/html
         read_only: true
       - type: bind
