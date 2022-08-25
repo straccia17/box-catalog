@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"straccia17.com/box-catalog-api/controllers"
@@ -21,6 +22,11 @@ func main() {
 	services.InitDB()
 
 	router := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://127.0.0.1:5173", "http://localhost:5173"}
+
+	router.Use(cors.New(config))
 
 	router.POST("/register", controllers.RegisterUser)
 	router.POST("/login", controllers.LoginUser)
