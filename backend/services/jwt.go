@@ -42,23 +42,33 @@ func validateToken(signedToken string) (*JWTClaim, error) {
 }
 
 func VerifyJWT() gin.HandlerFunc {
-	return func(context *gin.Context) {
-		tokenString := context.GetHeader("Authorization")
+	return func(c *gin.Context) {
+		tokenString, err := c.Cookie("BOX_CATALOG_TOKEN")
+
+		log.Println(tokenString)
+
+		if err != nil {
+			log.Println(err)
+			c.JSON(401, gin.H{"message": "Not authorized"})
+			c.Abort()
+			return
+		}
+
 		if tokenString == "" {
-			context.JSON(401, gin.H{"message": "Not authorized"})
-			context.Abort()
+			c.JSON(401, gin.H{"message": "Not authorized"})
+			c.Abort()
 			return
 		}
 		claims, err := validateToken(tokenString)
 		if err != nil {
 			log.Println(err.Error())
-			context.JSON(401, gin.H{"message": "Not authorized"})
-			context.Abort()
+			c.JSON(401, gin.H{"message": "Not authorized"})
+			c.Abort()
 			return
 		}
-		context.Set("UserID", claims.ID)
-		context.Set("Email", claims.Email)
-		context.Next()
+		c.Set("UserID", claims.ID)
+		c.Set("Email", claims.Email)
+		c.Next()
 	}
 }
 

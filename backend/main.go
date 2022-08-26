@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/gin-contrib/cors"
@@ -10,23 +11,33 @@ import (
 	"straccia17.com/box-catalog-api/services"
 )
 
-func initEnv() {
+func isLocalDevelopment() bool {
 	env := os.Getenv("APP_ENV")
-	if env == "" {
-		godotenv.Load(".env.local")
-	}
+	return env == ""
 }
 
 func main() {
-	initEnv()
+
+	localDev := isLocalDevelopment()
+
+	if localDev {
+		log.Println("Load local environment variables")
+		godotenv.Load(".env.local")
+	}
+
 	services.InitDB()
 
 	router := gin.Default()
 
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://127.0.0.1:5173", "http://localhost:5173"}
+	if localDev {
 
-	router.Use(cors.New(config))
+		log.Println("Configure CORS middleware")
+
+		config := cors.DefaultConfig()
+		config.AllowOrigins = []string{"http://127.0.0.1:5173", "http://localhost:5173"}
+
+		router.Use(cors.New(config))
+	}
 
 	router.POST("/register", controllers.RegisterUser)
 	router.POST("/login", controllers.LoginUser)

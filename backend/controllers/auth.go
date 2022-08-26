@@ -101,6 +101,7 @@ func LoginUser(c *gin.Context) {
 			return
 		}
 
-		c.IndentedJSON(http.StatusOK, gin.H{"token": token})
+		c.SetCookie("BOX_CATALOG_TOKEN", token, 24*60*60, "/", "localhost", false, true)
+		c.IndentedJSON(http.StatusOK, gin.H{"logged": true})
 	}
 }
