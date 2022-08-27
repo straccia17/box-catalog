@@ -1,7 +1,7 @@
 package models
 
 type Location struct {
-	ID    string `json:"id" db:"location_id"`
+	ID    int    `json:"id" db:"location_id"`
 	Label string `json:"label" db:"label"`
 }
 
@@ -10,14 +10,14 @@ type NewLocation struct {
 }
 
 type Box struct {
-	ID       string `json:"id" db:"box_id"`
+	ID       int    `json:"id" db:"box_id"`
 	Label    string `json:"label" db:"label"`
 	Location string `json:"location" db:"location"`
 }
 
 type NewBox struct {
 	Label      string `json:"label" binding:"required"`
-	LocationID string `json:"locationId" binding:"required"`
+	LocationID int    `json:"locationId" binding:"required"`
 }
 
 type Category struct {

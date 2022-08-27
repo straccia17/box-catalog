@@ -101,7 +101,7 @@ func LoginUser(c *gin.Context) {
 			return
 		}
 
-		c.SetCookie("BOX_CATALOG_TOKEN", token, 24*60*60, "/", "localhost", false, true)
+		c.SetCookie("BOX_CATALOG_TOKEN", token, 24*60*60, "/", "box-catalog.straccia17.com", false, true)
 		c.IndentedJSON(http.StatusOK, gin.H{"logged": true})
 	}
 }

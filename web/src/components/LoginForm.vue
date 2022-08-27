@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useAuth } from '@/stores/auth'
+import { useAuth } from '@/stores/auth.store'
+import { useRouter } from 'vue-router';
 const auth = useAuth()
+const router = useRouter();
 
 let email = ref("")
 let password = ref("")
@@ -9,6 +11,7 @@ let password = ref("")
 const login = async () => {
     try {
         await auth.login(email.value, password.value)
+        router.push("/")
     } catch(e) {
         console.error(e)
     }

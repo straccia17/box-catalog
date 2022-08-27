@@ -34,7 +34,8 @@ func main() {
 		log.Println("Configure CORS middleware")
 
 		config := cors.DefaultConfig()
-		config.AllowOrigins = []string{"http://127.0.0.1:5173", "http://localhost:5173"}
+		config.AllowOrigins = []string{"http://box-catalog.straccia17.com:5173"}
+		config.AllowCredentials = true
 
 		router.Use(cors.New(config))
 	}
