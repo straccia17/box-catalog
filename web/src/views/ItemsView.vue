@@ -5,6 +5,6 @@ import ItemList from "../components/ItemList.vue";
 <template>
   <main>
     <h1>Items</h1>
-    <ItemList></ItemList>
+    <item-list></item-list>
   </main>
 </template>
